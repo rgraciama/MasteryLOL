@@ -5,7 +5,7 @@ var championLevels = 0;
 var extraLevel = 0;
 
 function resetValues() {
-    $('ul').empty();
+    $('ul#chart').empty();
     nearDatePlayed = 0;
     totalChampionPoints = 0;
     championLevels = 0;
@@ -92,9 +92,6 @@ function main() {
         //order
 				var order = $("input:radio[name='order']:checked").val();
 
-        /*var order = $('input:checkbox[name=orderNearestTime]:checked').val() === 'nearestTime' ? 'lastPlayTime' : 'championPoints';
-        var order = $('input:checkbox[name=orderNearestLevel]:checked').val() === 'nearestLevel' ? 'championPointsUntilNextLevel' : order;
-				*/
         var JSONmasterySumId = getChampionMasteryById(sumId);
 
         //sort JSON
