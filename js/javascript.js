@@ -101,6 +101,8 @@ function main() {
         $('#totalPoints').html("Total: " + totalChampionPoints);
         $('#totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
         $('#totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
+        $("#top").toggle("slow");
+        $("#tabs").show("slow");
     } else {
         alert("Insert Summoner name");
     }

@@ -16,6 +16,10 @@
 
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+	<!-- Custom Styles -->
+	<link rel="stylesheet" href="styles/toggle_switch.css">
+	<link rel="stylesheet" href="styles/chart.css">
+
 	<!-- Json2html -->
 	<script src="./js/tools/json2html.js"></script>
 	<script src="./js/tools/jquery.json2html.js"></script>
@@ -30,6 +34,9 @@
 	<script>
 		$(function() {
 			$("#tabs").tabs();
+			$("input[type='checkbox']").on("click", function() {
+				$("#top").toggle("slow");
+			});
 		});
 	</script>
 
@@ -38,69 +45,37 @@
 		body {
 			padding: 10px;
 		}
-
-		#chart {
-			list-style: none;
-			background-color: lightyellow;
-			border: 2px solid black;
-		}
-
-		#chart li {
-			display: inline-block;
-			padding: 1px;
-		}
-
-		#chart .group {}
-
-		#chart .label {
-			text-align: center;
-			color: gray;
-		}
-
-		#chart .bar {
-			width: 25px;
-			background-color: blue;
-			text-align: center;
-			color: red;
-		}
-
-		#chart .chest {
-			width: 25px;
-			background-color: LightBlue;
-			text-align: center;
-			color: red;
-		}
-
-		/*#container {
-			position: absolute;
-			top: 100px;
-			left: 500px;
-			width: 200px;
-			border: 2px solid black;
-			padding: 5px;
-			background-color: lightyellow;
-		}*/
 	</style>
 </head>
 
 <body>
-	<h2>Mastery LoL</h2>
-	<div id="inputs">
-		<br />Summoner Name
-		<br />
-		<input id="userName" />
-		<br />Api Key
-		<br />
-		<input id="apiKey" />
-		<input type="submit" onclick="main();" />
+	<div id="switch_button">
+		<h2 style="float:both">Mastery LoL</h2>
+		<!-- Rounded switch -->
+		<label class="switch">
+			<input id="yeah" type="checkbox">
+			<div class="slider round"></div>
+		</label>
+
 	</div>
-	<div class="sort">
-		<input type="radio" name="order" value="championPoints">Experience<br>
-		<input type="radio" name="order" value="lastPlayTime">Last Time Played<br>
-		<input type="radio" name="order" value="championPointsUntilNextLevel">Nearest Level<br>
+	<div id="top" style="display:true">
+		<div id="inputs">
+			<br />Summoner Name
+			<br />
+			<input id="userName" />
+			<br />Api Key
+			<br />
+			<input id="apiKey" />
+			<input type="submit" onclick="main();" />
+		</div>
+		<div class="sort">
+			<input type="radio" name="order" value="championPoints">Experience<br>
+			<input type="radio" name="order" value="lastPlayTime">Last Time Played<br>
+			<input type="radio" name="order" value="championPointsUntilNextLevel">Nearest Level<br>
+		</div>
 	</div>
 
-	<div id="tabs">
+	<div id="tabs" style="clear:both;float:both;display:none">
 		<ul>
 			<li><a href="#tabs-1">Match</a></li>
 			<li><a href="#tabs-2">Team1</a></li>
@@ -108,7 +83,7 @@
 		</ul>
 		<div id="tabs-1">
 			<div id="container">
-				<br />Summoner ID: <span id="sID"></span>
+				Summoner ID: <span id="sID"></span>
 				<div id="totalPoints"></div>
 				<div id="totalChampionLevel"></div>
 				<div id="totalTimePlayed"></div>
