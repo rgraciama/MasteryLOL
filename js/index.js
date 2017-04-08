@@ -6,6 +6,9 @@ var extraLevel = 0;
 
 function resetValues() {
     $('ul#chart').empty();
+    for (var i; i<9;i++) {
+      $('ul#p'+i+'_chart').empty();
+    }
     nearDatePlayed = 0;
     totalChampionPoints = 0;
     championLevels = 0;
@@ -110,18 +113,20 @@ function getTab2Info(sumId) {
   //$("#prueba2").html(JSON.stringify(JSONmatchSumId));
 
   for (var i = 0; i < 10; i++) {
-    var strPos = ""+i+"";
-    var currSumId = JSONmatchSumId.participants[strPos].summonerId;
+    var currSumId = JSONmatchSumId.participants[i].summonerId;
     //get Mastery points from summoner
     var JSONmasterySumId = getChampionMasteryById(currSumId);
     //sort JSON
     jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
 
     printBars(jsonSortByChampionID, "#p"+i+"_chart");
-    $('#p'+i+'_summonerName').html("Name: " +  JSONmatchSumId.participants[strPos].summonerName);
+    $('#p'+i+'_summonerName').html("Name: " +  JSONmatchSumId.participants[i].summonerName);
     $('#p'+i+'_totalPoints').html("Total: " + totalChampionPoints);
     $('#p'+i+'_totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
     $('#p'+i+'_totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
+
+    //resetValues
+
     nearDatePlayed = 0;
     totalChampionPoints = 0;
     championLevels = 0;
