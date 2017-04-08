@@ -1,4 +1,5 @@
 var JSONSummoner;
+var JSONmatchSumId;
 
 var sumName = "";
 var API_KEY = "";
