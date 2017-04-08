@@ -33,6 +33,7 @@
 
 	<script>
 		$(function() {
+			$( document ).tooltip();
 			$("#tabs").tabs();
 			$("input[type='checkbox']").on("click", function() {
 				$("#top").toggle("slow");
@@ -62,12 +63,12 @@
 			<div id="summ" style="float:left;clear:left">
 				Summoner Name
 				<br />
-				<input id="userName" />
+				<input id="userName" title="Insert a summoner name to inspect it mastery champion points."/>
 			</div>
 			<div id="token" style="float:left">
 				Api Key
 				<br />
-				<input id="apiKey" />
+				<input id="apiKey" title="Insert your Api Key or go to https://developer.riotgames.com/ to get one." />
 			</div>
 			<br/>
 			<input type="submit" onclick="main();" />

@@ -52,7 +52,7 @@ function getChampionMasteryById(sumId) {
 function getCurrentMatchBySummonerId(sumId) {
 	var data;
 	$.ajax({
-		url: "https://euw.api.pvp.net//observer-mode/rest/consumer/getSpectatorGameInfo/EUW1/"+sumId+"/champions?api_key=" + API_KEY,
+		url: "https://euw.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/EUW1/"+sumId+"?api_key=" + API_KEY,
 		dataType: 'json',
 		data: data,
 		async: false,
