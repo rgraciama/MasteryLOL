@@ -11,3 +11,5 @@ del summoner introducido.
 | Limguear     |     X    |
 
 Para obtener la ApiToken necesitas tener una cuenta del [League of legends](http://euw.leagueoflegends.com/es) y registrarte en la página de [Riot Developer](https://developer.riotgames.com/).
+
+Puedes ver el proyecto como avanca [aquí](https://rgraciama.github.io/mastery_lol/)

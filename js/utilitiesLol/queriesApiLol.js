@@ -60,7 +60,8 @@ function getCurrentMatchBySummonerId(sumId) {
 			data = json;
 		},
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
-			alert("Summoner is not playing");
+			//alert("Summoner is not playing");
+			$("#prueba2").html("Summoner is not playing at this moment");
 		}
 
 	});
