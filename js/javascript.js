@@ -74,6 +74,34 @@ function printBars(data) {
     //console.log(JSON.stringify(data));
 }
 
+function getTab1Info(sumId) {
+  //print bars from mastery points
+  resetValues();
+
+  //order
+  var order = $("input:radio[name='order']:checked").val();
+
+  //get Mastery points from summoner
+  var JSONmasterySumId = getChampionMasteryById(sumId);
+
+  //sort JSON
+  jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
+
+  printBars(jsonSortByChampionID);
+  $('#summonerName').html("Name: " +  $("#userName").val().replace(" ", "").toLowerCase().trim());
+  $('#totalPoints').html("Total: " + totalChampionPoints);
+  $('#totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
+  $('#totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
+  $("#top").toggle("slow");
+  $("#tabs").show("slow");
+}
+
+function getTab2Info(sumId) {
+  var JSONmatchSumId = getCurrentMatchBySummonerId(sumId);
+
+  $("#prueba2").json2html(JSONmatchSumId);
+}
+
 function main() {
     var summoner_name = $("#userName").val().replace(" ", "").toLowerCase().trim();
     API_KEY = $("#apiKey").val();
@@ -81,28 +109,10 @@ function main() {
 
         //get ID summoner
         var sumId = getSummonerIdByName(summoner_name);
-        document.getElementById("sID").innerHTML = sumId;
 
-        //get Mastery points from summoner
-        getChampionMasteryById(sumId);
+        getTab1Info(sumId);
+        getTab2Info(sumId);
 
-        //print bars from mastery points
-        resetValues();
-
-        //order
-				var order = $("input:radio[name='order']:checked").val();
-
-        var JSONmasterySumId = getChampionMasteryById(sumId);
-
-        //sort JSON
-        jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
-
-        printBars(jsonSortByChampionID);
-        $('#totalPoints').html("Total: " + totalChampionPoints);
-        $('#totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
-        $('#totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
-        $("#top").toggle("slow");
-        $("#tabs").show("slow");
     } else {
         alert("Insert Summoner name");
     }

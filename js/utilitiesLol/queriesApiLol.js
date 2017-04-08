@@ -3,7 +3,7 @@ var JSONSummoner;
 var sumName = "";
 var API_KEY = "";
 var res;
-
+/* get request to obtain summoner name by id */
 function getSummonerIdByName(name) {
 	var data;
 	$.ajax({
@@ -32,16 +32,35 @@ function getSummonerIdByName(name) {
 //	var summonerId = 39681574; //Limguear
 //	var summonerId = 58390305; //David3D
 
-
-function getChampionMasteryById(sumId) {	
+/* get request to mastery JSON by summonerId */
+function getChampionMasteryById(sumId) {
 	var data;
-	$.ajax({ 
-		url: "https://euw.api.pvp.net/championmastery/location/euw1/player/"+sumId+"/champions?api_key=" + API_KEY, 
-		dataType: 'json', 
-		data: data, 
-		async: false, 
-		success: function(json){ 
-			data = json;		
+	$.ajax({
+		url: "https://euw.api.pvp.net/championmastery/location/euw1/player/"+sumId+"/champions?api_key=" + API_KEY,
+		dataType: 'json',
+		data: data,
+		async: false,
+		success: function(json){
+			data = json;
+		}
+
+	});
+	return data;
+};
+
+/* get request to match JSON by summonerId */
+function getCurrentMatchBySummonerId(sumId) {
+	var data;
+	$.ajax({
+		url: "https://euw.api.pvp.net//observer-mode/rest/consumer/getSpectatorGameInfo/EUW1/"+sumId+"/champions?api_key=" + API_KEY,
+		dataType: 'json',
+		data: data,
+		async: false,
+		success: function(json){
+			data = json;
+		},
+		error: function (XMLHttpRequest, textStatus, errorThrown) {
+			alert("Summoner is not playing");
 		}
 
 	});
