@@ -120,6 +120,13 @@ function getTab2Info(sumId) {
     jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
 
     printBars(jsonSortByChampionID, "#p"+i+"_chart");
+    if (JSONmatchSumId.participants[i].summonerName==$("#userName").val()) {
+      if (i<5) {
+        $("#tab-2_title").html("Team1 *");
+      } else {
+        $("#tab-3_title").html("Team2 *");
+      }
+    }
     $('#p'+i+'_summonerName').html("Name: " +  JSONmatchSumId.participants[i].summonerName);
     $('#p'+i+'_totalPoints').html("Total: " + totalChampionPoints);
     $('#p'+i+'_totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
