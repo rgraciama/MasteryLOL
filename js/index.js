@@ -113,6 +113,7 @@ function getTab2Info(sumId) {
   //$("#prueba2").html(JSON.stringify(JSONmatchSumId));
 
   for (var i = 0; i < 10; i++) {
+    sleep(1000);
     var currSumId = JSONmatchSumId.participants[i].summonerId;
     //get Mastery points from summoner
     var JSONmasterySumId = getChampionMasteryById(currSumId);
@@ -155,4 +156,13 @@ function main() {
     } else {
         alert("Insert Summoner name");
     }
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
