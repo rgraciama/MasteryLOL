@@ -3,13 +3,13 @@ var totalChampionPoints = 0;
 var nearDatePlayed = 0;
 var championLevels = 0;
 var extraLevel = 0;
-var championId;
+var championId = 0;
 
 function resetValues() {
     $('ul#chart').empty();
-    /*for (var i; i<9;i++) {
+    for (var i; i<9;i++) {
       $('ul#p'+i+'_chart').empty();
-    }*/
+    }
     nearDatePlayed = 0;
     totalChampionPoints = 0;
     championLevels = 0;
@@ -117,7 +117,7 @@ function getTab2Info(sumId) {
     //$("#prueba2").html(JSON.stringify(JSONmatchSumId));
 
     for (var i = 0; i < 10; i++) {
-        sleep(1000);
+        sleep(1100);
 
         var currSumId = JSONmatchSumId.participants[i].summonerId;
         //get Mastery points from summoner
