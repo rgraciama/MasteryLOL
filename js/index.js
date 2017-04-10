@@ -3,12 +3,13 @@ var totalChampionPoints = 0;
 var nearDatePlayed = 0;
 var championLevels = 0;
 var extraLevel = 0;
+var championId;
 
 function resetValues() {
     $('ul#chart').empty();
-    for (var i; i<9;i++) {
+    /*for (var i; i<9;i++) {
       $('ul#p'+i+'_chart').empty();
-    }
+    }*/
     nearDatePlayed = 0;
     totalChampionPoints = 0;
     championLevels = 0;
@@ -47,7 +48,15 @@ var transformsJSONsumChamMastery = {
         "html": [{
                 "<>": "div",
                 "class": function() {
-                    return (this.chestGranted ? "bar chest" : "bar");
+                    if ((championId === this.championId) && this.chestGranted) {
+                      return "bar currentChest";
+                    } else if (this.chestGranted) {
+                      return "bar chest";
+                    } else if (championId === this.championId) {
+                      return "bar current"
+                    } else {
+                      return "bar";
+                    }
                 },
                 "style": function() {
                     //Calculate the scale that we want this in
@@ -78,68 +87,67 @@ function printBars(data, cssLocation) {
 }
 
 function getTab1Info(sumId) {
-  //print bars from mastery points
-  resetValues();
+    //print bars from mastery points
+    resetValues();
 
-  //order
-  var order = $("input:radio[name='order']:checked").val();
+    //order
+    var order = $("input:radio[name='order']:checked").val();
 
-  //get Mastery points from summoner
-  var JSONmasterySumId = getChampionMasteryById(sumId);
-
-  //sort JSON
-  jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
-
-  printBars(jsonSortByChampionID, "#chart");
-  $('#summonerName').html("Name: " +  $("#userName").val().replace(" ", "").toLowerCase().trim());
-  $('#totalPoints').html("Total: " + totalChampionPoints);
-  $('#totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
-  $('#totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
-  $("#top").toggle("slow");
-  $("#tabs").show("slow");
-}
-
-// sleep time expects milliseconds
-function sleep (time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
-
-function getTab2Info(sumId) {
-  JSONmatchSumId = getCurrentMatchBySummonerId(sumId);
-
-  //order
-  var order = $("input:radio[name='order']:checked").val();
-
-  //$("#prueba2").html(JSON.stringify(JSONmatchSumId));
-
-  for (var i = 0; i < 10; i++) {
-    sleep(1000);
-    var currSumId = JSONmatchSumId.participants[i].summonerId;
     //get Mastery points from summoner
-    var JSONmasterySumId = getChampionMasteryById(currSumId);
+    var JSONmasterySumId = getChampionMasteryById(sumId);
+
     //sort JSON
     jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
 
-    printBars(jsonSortByChampionID, "#p"+i+"_chart");
-    if (JSONmatchSumId.participants[i].summonerName==$("#userName").val()) {
-      if (i<5) {
-        $("#tab-2_title").html("Team1 *");
-      } else {
-        $("#tab-3_title").html("Team2 *");
-      }
+    printBars(jsonSortByChampionID, "#chart");
+    $('#summonerName').html("Name: " + $("#userName").val().replace(" ", "").toLowerCase().trim());
+    $('#totalPoints').html("Total: " + totalChampionPoints);
+    $('#totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
+    $('#totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
+    $("#top").toggle("slow");
+    $("#tabs").show("slow");
+}
+
+function getTab2Info(sumId) {
+    JSONmatchSumId = getCurrentMatchBySummonerId(sumId);
+
+    //order
+    var order = $("input:radio[name='order']:checked").val();
+
+    //$("#prueba2").html(JSON.stringify(JSONmatchSumId));
+
+    for (var i = 0; i < 10; i++) {
+        sleep(1000);
+
+        var currSumId = JSONmatchSumId.participants[i].summonerId;
+        //get Mastery points from summoner
+        var JSONmasterySumId = getChampionMasteryById(currSumId);
+        //sort JSON
+        jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
+
+        championId =  JSONmatchSumId.participants[i].championId;
+        //printbars
+        printBars(jsonSortByChampionID, "#p" + i + "_chart");
+        if (JSONmatchSumId.participants[i].summonerName == $("#userName").val()) {
+            if (i < 5) {
+                $("#tab-2_title").html("Team1 *");
+                $("#tab-3_title").html("Team2");
+            } else {
+                $("#tab-2_title").html("Team1");
+                $("#tab-3_title").html("Team2 *");
+            }
+        }
+        $('#p' + i + '_summonerName').html("Name: " + JSONmatchSumId.participants[i].summonerName);
+        $('#p' + i + '_totalPoints').html("Total: " + totalChampionPoints);
+        $('#p' + i + '_totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
+        $('#p' + i + '_totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
+
+        //resetValues
+        nearDatePlayed = 0;
+        totalChampionPoints = 0;
+        championLevels = 0;
+        extraLevel = 0;
     }
-    $('#p'+i+'_summonerName').html("Name: " +  JSONmatchSumId.participants[i].summonerName);
-    $('#p'+i+'_totalPoints').html("Total: " + totalChampionPoints);
-    $('#p'+i+'_totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
-    $('#p'+i+'_totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
-
-    //resetValues
-
-    nearDatePlayed = 0;
-    totalChampionPoints = 0;
-    championLevels = 0;
-    extraLevel = 0;
-  }
 }
 
 function main() {
@@ -159,10 +167,10 @@ function main() {
 }
 
 function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
     }
-  }
 }

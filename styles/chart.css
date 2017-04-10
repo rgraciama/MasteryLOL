@@ -29,3 +29,13 @@
   text-align: center;
   color: red;
 }
+
+.chart .current {
+  background-color: darkred;
+  border: 2px solid red;
+}
+
+.chart .currentChest {
+  background-color: lightpink;
+  border: 2px solid red;
+}
