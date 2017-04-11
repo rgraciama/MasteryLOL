@@ -1,5 +1,9 @@
 var JSONSummoner;
 var JSONmatchSumId;
+var MatchList_JSONmatchSumParticipant = [];
+var MatchList_summonerName = [];
+var MatchList_summonerPoints = [];
+var MatchList_summonerChamp = [];
 
 var sumName = "";
 var API_KEY = "";

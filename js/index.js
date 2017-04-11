@@ -49,10 +49,14 @@ var transformsJSONsumChamMastery = {
                 "<>": "div",
                 "class": function() {
                     if ((championId === this.championId) && this.chestGranted) {
+                      //TODO agregas championPoints al array
+                      MatchList_summonerPoints.push(this.championPoints);
                       return "bar currentChest";
                     } else if (this.chestGranted) {
                       return "bar chest";
                     } else if (championId === this.championId) {
+                      //TODO agregas championPoints al array
+                      MatchList_summonerPoints.push(this.championPoints);
                       return "bar current"
                     } else {
                       return "bar";
@@ -120,12 +124,22 @@ function getTab2Info(sumId) {
         sleep(1100);
 
         var currSumId = JSONmatchSumId.participants[i].summonerId;
+
         //get Mastery points from summoner
         var JSONmasterySumId = getChampionMasteryById(currSumId);
+
+
         //sort JSON
         jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
 
         championId =  JSONmatchSumId.participants[i].championId;
+
+        //Control summonerMatch
+        MatchList_JSONmatchSumParticipant.push(JSONmasterySumId);
+        MatchList_summonerName.push(JSONmatchSumId.participants[i].summonerName);
+        MatchList_summonerChamp.push(JSONchampion.data[this.championId].name);
+
+
         //printbars
         printBars(jsonSortByChampionID, "#p" + i + "_chart");
         if (JSONmatchSumId.participants[i].summonerName == $("#userName").val()) {
@@ -150,6 +164,20 @@ function getTab2Info(sumId) {
     }
 }
 
+function getTab4Info() {
+    /*myChart.update()*/
+    myChart.update({
+					// A labels array that can contain any sort of values
+					labels: MatchList_summonerChamp,
+					// Our series array that contains series objects or in this case series data arrays
+					series: [
+						MatchList_summonerPoints
+					]
+				});
+
+
+}
+
 function main() {
     var summoner_name = $("#userName").val().replace(" ", "").toLowerCase().trim();
     API_KEY = $("#apiKey").val();
@@ -160,6 +188,7 @@ function main() {
 
         getTab1Info(sumId);
         getTab2Info(sumId);
+        getTab4Info();
 
     } else {
         alert("Insert Summoner name");

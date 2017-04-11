@@ -31,9 +31,13 @@
 	<!-- JSPage -->
 	<script src="js/index.js"></script>
 
+	<!--Charist.js-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+	<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
 	<script>
 		$(function() {
-			$( document ).tooltip();
+			$(document).tooltip();
 			$("#tabs").tabs();
 			$("input[type='checkbox']").on("click", function() {
 				$("#top").toggle("slow");
@@ -50,6 +54,7 @@
 </head>
 
 <body>
+
 	<div id="switch_button">
 		<h2 style="clear:left;float:left">Mastery LoL</h2>
 		<!-- Rounded switch -->
@@ -63,7 +68,7 @@
 			<div id="summ" style="float:left;clear:left">
 				Summoner Name
 				<br />
-				<input id="userName" title="Insert a summoner name to inspect it mastery champion points."/>
+				<input id="userName" title="Insert a summoner name to inspect it mastery champion points." />
 			</div>
 			<div id="token" style="float:left">
 				Api Key
@@ -86,6 +91,7 @@
 			<li><a id="tab-1_title" href="#tabs-1">Match</a></li>
 			<li><a id="tab-2_title" href="#tabs-2">Team1</a></li>
 			<li><a id="tab-3_title" href="#tabs-3">Team2</a></li>
+			<li><a id="tab-4_title" href="#tabs-4">VS</a></li>
 		</ul>
 		<div id="tabs-1">
 			<div class="container-champ-data">
@@ -182,7 +188,25 @@
 				<div id="p9_totalTimePlayed"></div>
 				<ul id="p9_chart" class="chart"></ul>
 			</div>
-			</div>
+		</div>
+		<div id="tabs-4">
+			<div class="ct-chart ct-perfect-fourth"></div>
+			<script>
+				var dataChart = {
+					// A labels array that can contain any sort of values
+					labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+					// Our series array that contains series objects or in this case series data arrays
+					series: [
+						[5, 2, 4, 2, 0]
+					]
+				};
+
+				// Create a new line chart object where as first parameter we pass in a selector
+				// that is resolving to our chart container element. The Second parameter
+				// is the actual data object.
+				var myChart = new Chartist.Line('.ct-chart', dataChart);
+			</script>
+		</div>
 	</div>
 
 
