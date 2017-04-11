@@ -37,10 +37,16 @@
 
 	<script>
 		$(function() {
+
 			$(document).tooltip();
 			$("#tabs").tabs();
 			$("input[type='checkbox']").on("click", function() {
 				$("#top").toggle("slow");
+			});
+			$("#tab-4_title").click(function() {
+				//TODO soluciones chungas Refresh graph
+				sleep(100);
+				myChart.update();
 			});
 		});
 	</script>
@@ -200,10 +206,14 @@
 						[5, 2, 4, 2, 0]
 					]
 				};
-
+				/*var options = {
+					width: 800,
+					height: 500
+				};*/
 				// Create a new line chart object where as first parameter we pass in a selector
 				// that is resolving to our chart container element. The Second parameter
 				// is the actual data object.
+				//var myChart = new Chartist.Line('.ct-chart', dataChart, options);
 				var myChart = new Chartist.Line('.ct-chart', dataChart);
 			</script>
 		</div>

@@ -7,13 +7,28 @@ var championId = 0;
 
 function resetValues() {
     $('ul#chart').empty();
-    for (var i; i<9;i++) {
-      $('ul#p'+i+'_chart').empty();
+    for (var i = 0; i < 9; i++) {
+        $('ul#p' + i + '_chart').empty();
     }
     nearDatePlayed = 0;
     totalChampionPoints = 0;
     championLevels = 0;
     extraLevel = 0;
+
+    MatchList_summonerChamp = [];
+    MatchList_summonerName = [];
+    MatchList_summonerPoints = [];
+    MatchList_JSONmatchSumParticipant = [];
+
+    myChart.update({
+        // A labels array that can contain any sort of values
+        labels: MatchList_summonerChamp,
+        // Our series array that contains series objects or in this case series data arrays
+        series: [{
+          name: 'ChamPoints',
+          data:MatchList_summonerPoints
+        }]
+    });
 }
 
 //ORDENAR JSON
@@ -49,17 +64,19 @@ var transformsJSONsumChamMastery = {
                 "<>": "div",
                 "class": function() {
                     if ((championId === this.championId) && this.chestGranted) {
-                      //TODO agregas championPoints al array
-                      MatchList_summonerPoints.push(this.championPoints);
-                      return "bar currentChest";
+                        //TODO agregas championPoints al array
+                        MatchList_summonerPoints.push(this.championPoints);
+
+                        return "bar currentChest";
                     } else if (this.chestGranted) {
-                      return "bar chest";
+                        return "bar chest";
                     } else if (championId === this.championId) {
-                      //TODO agregas championPoints al array
-                      MatchList_summonerPoints.push(this.championPoints);
-                      return "bar current"
+                        //TODO agregas championPoints al array
+                        MatchList_summonerPoints.push(this.championPoints);
+
+                        return "bar current"
                     } else {
-                      return "bar";
+                        return "bar";
                     }
                 },
                 "style": function() {
@@ -128,20 +145,23 @@ function getTab2Info(sumId) {
         //get Mastery points from summoner
         var JSONmasterySumId = getChampionMasteryById(currSumId);
 
-
         //sort JSON
         jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
 
-        championId =  JSONmatchSumId.participants[i].championId;
+        championId = JSONmatchSumId.participants[i].championId;
 
         //Control summonerMatch
         MatchList_JSONmatchSumParticipant.push(JSONmasterySumId);
         MatchList_summonerName.push(JSONmatchSumId.participants[i].summonerName);
         MatchList_summonerChamp.push(JSONchampion.data[this.championId].name);
 
-
         //printbars
         printBars(jsonSortByChampionID, "#p" + i + "_chart");
+
+        //Comprobar length de array para ver si se ha añadido champPoints
+        if (MatchList_summonerChamp.length !== MatchList_summonerPoints.length) {
+          MatchList_summonerPoints.push(0);
+        }
         if (JSONmatchSumId.participants[i].summonerName == $("#userName").val()) {
             if (i < 5) {
                 $("#tab-2_title").html("Team1 *");
@@ -156,7 +176,7 @@ function getTab2Info(sumId) {
         $('#p' + i + '_totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
         $('#p' + i + '_totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
 
-        //resetValues
+        //resetValues per every champ
         nearDatePlayed = 0;
         totalChampionPoints = 0;
         championLevels = 0;
@@ -165,16 +185,38 @@ function getTab2Info(sumId) {
 }
 
 function getTab4Info() {
-    /*myChart.update()*/
-    myChart.update({
-					// A labels array that can contain any sort of values
-					labels: MatchList_summonerChamp,
-					// Our series array that contains series objects or in this case series data arrays
-					series: [
-						MatchList_summonerPoints
-					]
-				});
 
+    myChart.update({
+        // A labels array that can contain any sort of values
+        labels: MatchList_summonerChamp,
+        // Our series array that contains series objects or in this case series data arrays
+        series: [{
+          name: 'ChamPoints',
+          data:MatchList_summonerPoints
+        }]
+    });
+
+    var $tooltip = $('<div class="tooltip tooltip-hidden"></div>').appendTo($('.ct-chart'));
+
+    $(document).on('mouseenter', '.ct-point', function() {
+      var seriesName = $(this).closest('.ct-series').attr('ct:series-name'),
+          value = $(this).attr('ct:value');
+
+      $tooltip.text(seriesName + ': ' + value);
+      $tooltip.removeClass('tooltip-hidden');
+    });
+
+    $(document).on('mouseleave', '.ct-point', function() {
+      $tooltip.addClass('tooltip-hidden');
+    });
+
+    $(document).on('mousemove', '.ct-point', function(event) {
+      //console.log(event);
+      $tooltip.css({
+        left: (event.offsetX || event.originalEvent.layerX) - $tooltip.width() / 2,
+        top: (event.offsetY || event.originalEvent.layerY) - $tooltip.height() - 20
+      });
+    });
 
 }
 
