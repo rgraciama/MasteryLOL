@@ -4,6 +4,8 @@ var MatchList_JSONmatchSumParticipant = [];
 var MatchList_summonerName = [];
 var MatchList_summonerPoints = [];
 var MatchList_summonerChamp = [];
+var MatchList_summonerAveragePoints = [];
+
 
 var sumName = "";
 var API_KEY = "";
