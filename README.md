@@ -16,4 +16,29 @@ Puedes ver el proyecto como avanza [aquí](https://rgraciama.github.io/mastery_l
 
 ## Input Form
 
+![alt tag](https://github.com/rgraciama/mastery_lol/blob/master/img/readme/1_input.jpg)
+
+You need to add summoner name and your api lol token and push the button send.
+
+* The checkboxes is the way to sort Mastery champion bars from the query returned.
+
+# Tab 1
+
+![alt tag](https://github.com/rgraciama/mastery_lol/blob/master/img/readme/2_tab1.jpg)
+
+This is the Mastery Champions points bars from the summoner account selected.
+
+# Tab 2 & 3 - Teams Mastery Champion Points
+
+![alt tag](https://github.com/rgraciama/mastery_lol/blob/master/img/readme/2_tab23.jpg)
+
+This is the Mastery Champions points bars from every summoner account in the current match.
+
+* The (*) indicates your current team.
+
+# Tab 4 - Current Mastery Champion points
+
+![alt tag](https://github.com/rgraciama/mastery_lol/blob/master/img/readme/2_tab4.jpg)
+
+This is graph of the current mastery champion points from the current match.
 
