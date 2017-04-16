@@ -30,7 +30,7 @@ This is the Mastery Champions points bars from the summoner account selected.
 
 # Tab 2 & 3 - Teams Mastery Champion Points
 
-![alt tag](https://github.com/rgraciama/mastery_lol/blob/master/img/readme/2_tab23.jpg)
+![alt tag](https://github.com/rgraciama/mastery_lol/blob/master/img/readme/3_tab23.jpg)
 
 This is the Mastery Champions points bars from every summoner account in the current match.
 
@@ -38,7 +38,7 @@ This is the Mastery Champions points bars from every summoner account in the cur
 
 # Tab 4 - Current Mastery Champion points
 
-![alt tag](https://github.com/rgraciama/mastery_lol/blob/master/img/readme/2_tab4.jpg)
+![alt tag](https://github.com/rgraciama/mastery_lol/blob/master/img/readme/4_tab4.jpg)
 
 This is graph of the current mastery champion points from the current match.
 
