@@ -95,7 +95,7 @@ var transformsJSONsumChamMastery = {
                 "<>": "div",
                 "class": "label",
                 "html": function() {
-                    return (JSONchampion.data[this.championId].name)
+                    return (JSONchampion.keys[this.championId])
                 }
             }
         ]
