@@ -153,7 +153,7 @@ function getTab2Info(sumId) {
         //Control summonerMatch
         MatchList_JSONmatchSumParticipant.push(JSONmasterySumId);
         MatchList_summonerName.push(JSONmatchSumId.participants[i].summonerName);
-        MatchList_summonerChamp.push(JSONchampion.data[this.championId].name);
+        MatchList_summonerChamp.push(JSONchampion.keys[this.championId]);
 
         //printbars
         printBars(jsonSortByChampionID, "#p" + i + "_chart");
