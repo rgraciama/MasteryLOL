@@ -138,6 +138,12 @@ function getTab2Info(sumId) {
     //$("#prueba2").html(JSON.stringify(JSONmatchSumId));
 
     for (var i = 0; i < 10; i++) {
+      //resetValues per every champ
+      nearDatePlayed = 0;
+      totalChampionPoints = 0;
+      championLevels = 0;
+      extraLevel = 0;
+
         sleep(1100);
 
         var currSumId = JSONmatchSumId.participants[i].summonerId;
@@ -176,11 +182,7 @@ function getTab2Info(sumId) {
         $('#p' + i + '_totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
         $('#p' + i + '_totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
 
-        //resetValues per every champ
-        nearDatePlayed = 0;
-        totalChampionPoints = 0;
-        championLevels = 0;
-        extraLevel = 0;
+
     }
 }
 
