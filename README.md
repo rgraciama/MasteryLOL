@@ -1,5 +1,7 @@
 # Mastery Lol
 
+[![Join the chat at https://gitter.im/mastery_lol/Lobby](https://badges.gitter.im/mastery_lol/Lobby.svg)](https://gitter.im/mastery_lol/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A simple page to obtain Mastery Champion points, given a summoner name account.
 
 ## Requisitos (Ejemplo)
