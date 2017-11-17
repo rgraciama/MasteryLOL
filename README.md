@@ -12,7 +12,7 @@ A simple page to obtain Mastery Champion points, given a summoner name account.
 
 To obtain ApiToken you need a summoner account from [League of legends](http://euw.leagueoflegends.com/es) and you must sign up at [Riot Developer](https://developer.riotgames.com/).
 
-You can see the current project status [here](https://rgraciama.github.io/mastery_lol/)
+You can see the current project status [here](https://rgraciama.github.io/MasteryLOL/)
 
 ### Input Form
 
