@@ -20,7 +20,7 @@ function getSummonerIdByName(name) {
 		data: data,
 		async: false,
 		success: function (jsonSummonerId) {
-			data =  jsonSummonerId[name].id;
+			data =  jsonSummonerId.id;
 		},
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
 			alert("error getting Summoner data!");
