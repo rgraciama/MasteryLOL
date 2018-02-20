@@ -43,7 +43,7 @@ function getSummonerIdByName(name) {
 function getChampionMasteryById(sumId) {
 	var data;
 	$.ajax({
-		url: "https://euw1.api.riotgames.com//lol/champion-mastery/v3/champion-masteries/by-summoner/"+sumId+"/champions?api_key=" + API_KEY,
+		url: "https://euw1.api.riotgames.com//lol/champion-mastery/v3/champion-masteries/by-summoner/"+sumId+"?api_key=" + API_KEY,
 		dataType: 'json',
 		data: data,
 		async: false,
