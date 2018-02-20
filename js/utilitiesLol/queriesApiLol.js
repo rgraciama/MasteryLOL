@@ -14,7 +14,7 @@ var res;
 function getSummonerIdByName(name) {
 	var data;
 	$.ajax({
-		url: 'https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/'+name+'?api_key=' + API_KEY,
+		url: 'https://euw1.api.riotgames.com/lol/summoner/v3/summoners/by-name/'+name+'?api_key=' + API_KEY,
 		type: 'GET',
 		dataType: 'json',
 		data: data,
@@ -43,7 +43,7 @@ function getSummonerIdByName(name) {
 function getChampionMasteryById(sumId) {
 	var data;
 	$.ajax({
-		url: "https://euw.api.pvp.net/championmastery/location/euw1/player/"+sumId+"/champions?api_key=" + API_KEY,
+		url: "https://euw1.api.riotgames.com//lol/champion-mastery/v3/champion-masteries/by-summoner/"+sumId+"/champions?api_key=" + API_KEY,
 		dataType: 'json',
 		data: data,
 		async: false,
@@ -59,7 +59,7 @@ function getChampionMasteryById(sumId) {
 function getCurrentMatchBySummonerId(sumId) {
 	var data;
 	$.ajax({
-		url: "https://euw.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/EUW1/"+sumId+"?api_key=" + API_KEY,
+		url: "https://euw1.api.riotgames.com/lol/spectator/v3/active-games/by-summoner/"+sumId+"?api_key=" + API_KEY,
 		dataType: 'json',
 		data: data,
 		async: false,
