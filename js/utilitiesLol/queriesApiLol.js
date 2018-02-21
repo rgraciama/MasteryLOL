@@ -6,7 +6,7 @@ var MatchList_summonerPoints = [];
 var MatchList_summonerChamp = [];
 var MatchList_summonerAveragePoints = [];
 
-
+//Welcome to the new branch
 var sumName = "";
 var API_KEY = "";
 var res;
