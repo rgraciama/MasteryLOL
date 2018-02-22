@@ -8,7 +8,7 @@ var MatchList_summonerAveragePoints = [];
 
 //Welcome to the new branch
 var sumName = "";
-var API_KEY = "RGAPI-95c707ff-6dec-4c34-bdec-38fa326841c8"
+var API_KEY = "RGAPI-75b6b480-c6a4-4eea-81b9-d41259c61e7d"
 var res;
 /* get request to obtain summoner name by id */
 function getSummonerIdByName(name) {
@@ -31,7 +31,7 @@ function getSummonerIdByName(name) {
 
 // 	var summonerId = 20937516; //Crowcito
 //	var summonerId = 24242533; //XxHikaruxX
-//	var summonerId = 28801599; //MelowMastah
+//	var summonerId = 28801599; //MelowMastah ===> Krugs never die
 //	var summonerId = 38768620; //xapher23
 //	var summonerId = 39328659; //Raul
 //	var summonerId = 39418130; //Neroo88
@@ -67,9 +67,7 @@ function getCurrentMatchBySummonerId(sumId) {
 			data = json;
 		},
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
-			//alert("Summoner is not playing");
-			$("#tabs-2").html("Summoner is not playing at this moment");
-			$("#tabs-3").html("Summoner is not playing at this moment");
+			alert("Summoner is not playing");
 		}
 
 	});
