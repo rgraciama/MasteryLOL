@@ -8,7 +8,7 @@ var MatchList_summonerAveragePoints = [];
 
 //Welcome to the new branch
 var sumName = "";
-var API_KEY = "";
+var API_KEY = "RGAPI-95c707ff-6dec-4c34-bdec-38fa326841c8"
 var res;
 /* get request to obtain summoner name by id */
 function getSummonerIdByName(name) {
