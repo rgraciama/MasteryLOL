@@ -10,18 +10,23 @@ var dataChart = {
   labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
   // Our series array that contains series objects or in this case series data arrays
   series: [
-    [5, 4, 3, 7, 5, 10, 3],
-    [3, 2, 9, 5, 4, 6, 4]
+    [5000, 4000, 3000, 70000, 50000, 10000, 30000],
+    [300, 20000, 90000, 5000, 4000, 6000, 40000]
   ]
 };
-var myChart = new Chartist.Bar('.ct-chart', dataChart, {
+var myChart = new Chartist.Bar('#chart1', dataChart, {
   seriesBarDistance: 10,
   reverseData: true,
   horizontalBars: true,
   axisY: {
-    offset: 100
+    offset: 100,
   },
-  height: '3000px'
+  axisX: {
+    type: Chartist.FixedScaleAxis,
+    divisor: 4,
+    ticks: [1800, 6000, 12600, 21600]
+  },
+  height: '3000px',
 });
 
 function main() {
@@ -46,6 +51,7 @@ function drawChart() {
             data: MatchList_summonerPoints
           }]
       });
+      //jQuery(".ct-grids").append("<line x1='2100' x2='2100' y1='15' y2='2965' class='ct-grid ct-horizontal'></line>");
 }
 
 function getChartInfo(sumId) {
