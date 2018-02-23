@@ -26,7 +26,7 @@ var myChart = new Chartist.Bar('#chart1', dataChart, {
     divisor: 4,
     ticks: [1800, 6000, 12600, 21600]
   },
-  height: '3000px',
+  height: '3000px'
 });
 
 function main() {
@@ -51,7 +51,6 @@ function drawChart() {
             data: MatchList_summonerPoints
           }]
       });
-      //jQuery(".ct-grids").append("<line x1='2100' x2='2100' y1='15' y2='2965' class='ct-grid ct-horizontal'></line>");
 }
 
 function getChartInfo(sumId) {
