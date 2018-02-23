@@ -26,10 +26,17 @@
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
         </ul>
-        <div class="btn-group mr-sm-2" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-secondary">Experience</button>
-          <button type="button" class="btn btn-secondary">Last Time Played</button>
-          <button type="button" class="btn btn-secondary">Nearest Level</button>
+
+        <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
+          <label class="btn btn-secondary active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Experience
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option2" autocomplete="off"> Last Time Played
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Nearest Level
+          </label>
         </div>
         <form class="form-inline my-2 my-lg-0">
           <input id="userName" class="form-control mr-sm-2" type="search" placeholder="SummonerName" aria-label="Search">
