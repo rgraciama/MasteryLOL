@@ -19,19 +19,19 @@ var myChart = new Chartist.Bar('.ct-chart', dataChart, {
   reverseData: true,
   horizontalBars: true,
   axisY: {
-    offset: 70
-  }
+    offset: 100
+  },
+  height: '3000px'
 });
 
 function main() {
+    resetValues();
     var summoner_name = $("#userName").val().replace(" ", "").toLowerCase().trim();
     if (summoner_name !== "") {
         //get ID summoner
         var sumId = getSummonerIdByName(summoner_name);
         getChartInfo(sumId);
         drawChart();
-        alert("Venga loco!");
-
     } else {
         alert("Insert Summoner name");
     }
@@ -50,12 +50,22 @@ function drawChart() {
 
 function getChartInfo(sumId) {
 
+  //order
+  var order = $("input:radio[name='order']:checked").val();
+
   //get Mastery points from summoner
   var JSONmasterySumId = getChampionMasteryById(sumId);
 
-  for (var i = 0; i < JSONmasterySumId.length; i++)) {
-    MatchList_summonerPoints.push(JSONmasterySumId[i].championPoints);
-  }
+    //sort JSON
+    jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
+
+    //Every Champion to be setted to the cahr
+    for (var i = 0; i < JSONmasterySumId.length; i++) {
+      championId = jsonSortByChampionID[i].championId;
+      MatchList_summonerChamp.push(JSONchampion.keys[this.championId]);
+      MatchList_summonerPoints.push(jsonSortByChampionID[i].championPoints);
+    }
+
 }
 
 function sleep(milliseconds) {
@@ -65,4 +75,42 @@ function sleep(milliseconds) {
             break;
         }
     }
+}
+
+//ORDENAR JSON
+function sortJSON(data, key, orden) {
+    return data.sort(function(a, b) {
+        var x = a[key],
+            y = b[key];
+
+        if (orden === 'asc') {
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        }
+
+        if (orden === 'desc') {
+            return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+        }
+    });
+}
+
+function resetValues() {
+    nearDatePlayed = 0;
+    totalChampionPoints = 0;
+    championLevels = 0;
+    extraLevel = 0;
+
+    MatchList_summonerChamp = [];
+    MatchList_summonerName = [];
+    MatchList_summonerPoints = [];
+    MatchList_JSONmatchSumParticipant = [];
+
+    myChart.update({
+        // A labels array that can contain any sort of values
+        labels: MatchList_summonerChamp,
+        // Our series array that contains series objects or in this case series data arrays
+        series: [{
+          name: 'ChamPoints',
+          data: MatchList_summonerPoints
+        }]
+    });
 }
