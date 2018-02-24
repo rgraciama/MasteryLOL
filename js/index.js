@@ -84,6 +84,7 @@ function getChartInfo(sumId) {
     //order
     var order = $("input:radio[name='order']:checked").val();
     //sort JSON
+    //si el orden es de nearest level orden ascendente
     var isAsc = (order==="championPointsUntilNextLevel")?'asc':'desc';
     jsonSortByChampionID = sortJSON(JSONmasterySumId, order, isAsc);
     //Every Champion to be setted to the cahr
