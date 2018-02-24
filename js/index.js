@@ -5,9 +5,9 @@ if (typeof(MatchList_summonerPoints) == "undefined") {
   var MatchList_summonerPoints = [];
   var MatchList_summonerChamp = [];
   var MatchList_summonerAveragePoints = [];
+  var CurrChampionLevels = [0,0,0,0,0,0,0,0];
   var totalChampionPoints = 0;
   var nearDatePlayed = 0;
-  var championLevels = 0;
   var extraLevel = 0;
   var championId = 0;
 }
@@ -45,10 +45,27 @@ function main() {
         var sumId = getSummonerIdByName(summoner_name);
         getChartInfo(sumId);
         drawChart();
+        drawLevels();
     } else {
         alert("Insert Summoner name");
     }
 }
+function drawLevels() {
+  if (typeof(CurrChampionLevels) != "undefined") {
+    //jQuery
+    jQuery("#level1 > h5").html(CurrChampionLevels[0]);
+    jQuery("#level2 > h5").html(CurrChampionLevels[1]);
+    jQuery("#level3 > h5").html(CurrChampionLevels[2]);
+    jQuery("#level4 > h5").html(CurrChampionLevels[3]);
+    jQuery("#level5 > h5").html(CurrChampionLevels[4]);
+    jQuery("#level6 > h5").html(CurrChampionLevels[5]);
+    jQuery("#level7 > h5").html(CurrChampionLevels[6]);
+    jQuery("#totalLevel > h5").html(CurrChampionLevels[7]);
+  } else {
+    alert("Levels info is not working properly!");
+  }
+}
+
 function drawChart() {
       myChart.update({
           // A labels array that can contain any sort of values
@@ -73,7 +90,10 @@ function getChartInfo(sumId) {
       championId = jsonSortByChampionID[i].championId;
       MatchList_summonerChamp.push(JSONchampion.keys[this.championId]);
       MatchList_summonerPoints.push(jsonSortByChampionID[i].championPoints);
-  }
+      //levels of championJson
+      CurrChampionLevels[jsonSortByChampionID[i].championLevel-1]+=1;
+      CurrChampionLevels[7]+=jsonSortByChampionID[i].championLevel;
+    }
 
 }
 
@@ -105,7 +125,7 @@ function sortJSON(data, key, orden) {
 function resetValues() {
     nearDatePlayed = 0;
     totalChampionPoints = 0;
-    championLevels = 0;
+    CurrChampionLevels = [0,0,0,0,0,0,0,0];
     extraLevel = 0;
 
     MatchList_summonerChamp = [];
