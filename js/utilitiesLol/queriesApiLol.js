@@ -1,14 +1,9 @@
 var JSONSummoner;
 var JSONmatchSumId;
-var MatchList_JSONmatchSumParticipant = [];
-var MatchList_summonerName = [];
-var MatchList_summonerPoints = [];
-var MatchList_summonerChamp = [];
-var MatchList_summonerAveragePoints = [];
 
 //Welcome to the new branch
 var sumName = "";
-var API_KEY = "RGAPI-75b6b480-c6a4-4eea-81b9-d41259c61e7d"
+var API_KEY = "RGAPI-c4a697e7-6626-4ec0-8788-be6186ee1d96"
 var res;
 /* get request to obtain summoner name by id */
 function getSummonerIdByName(name) {

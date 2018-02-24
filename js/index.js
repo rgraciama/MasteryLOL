@@ -1,18 +1,26 @@
-//VARS FROM WEBPAGE
-var totalChampionPoints = 0;
-var nearDatePlayed = 0;
-var championLevels = 0;
-var extraLevel = 0;
-var championId = 0;
+//VARS FROM WEBPAGE solo si no existen
+if (typeof(MatchList_summonerPoints) == "undefined") {
+  var MatchList_JSONmatchSumParticipant = [];
+  var MatchList_summonerName = [];
+  var MatchList_summonerPoints = [];
+  var MatchList_summonerChamp = [];
+  var MatchList_summonerAveragePoints = [];
+  var totalChampionPoints = 0;
+  var nearDatePlayed = 0;
+  var championLevels = 0;
+  var extraLevel = 0;
+  var championId = 0;
+}
+
 
 var dataChart = {
   // A labels array that can contain any sort of values
-  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+  labels: MatchList_summonerChamp,
   // Our series array that contains series objects or in this case series data arrays
-  series: [
-    [5000, 4000, 3000, 70000, 50000, 10000, 30000],
-    [300, 20000, 90000, 5000, 4000, 6000, 40000]
-  ]
+  series: [{
+    name: 'ChamPoints',
+    data: MatchList_summonerPoints
+  }]
 };
 var myChart = new Chartist.Bar('#chart1', dataChart, {
   seriesBarDistance: 10,
@@ -54,22 +62,18 @@ function drawChart() {
 }
 
 function getChartInfo(sumId) {
-
-  //order
-  var order = $("input:radio[name='order']:checked").val();
-
-  //get Mastery points from summoner
-  var JSONmasterySumId = getChampionMasteryById(sumId);
-
+    //get Mastery points from summoner
+    var JSONmasterySumId = getChampionMasteryById(sumId);
+    //order
+    var order = $("input:radio[name='order']:checked").val();
     //sort JSON
     jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
-
     //Every Champion to be setted to the cahr
     for (var i = 0; i < JSONmasterySumId.length; i++) {
       championId = jsonSortByChampionID[i].championId;
       MatchList_summonerChamp.push(JSONchampion.keys[this.championId]);
       MatchList_summonerPoints.push(jsonSortByChampionID[i].championPoints);
-    }
+  }
 
 }
 
@@ -109,13 +113,5 @@ function resetValues() {
     MatchList_summonerPoints = [];
     MatchList_JSONmatchSumParticipant = [];
 
-    myChart.update({
-        // A labels array that can contain any sort of values
-        labels: MatchList_summonerChamp,
-        // Our series array that contains series objects or in this case series data arrays
-        series: [{
-          name: 'ChamPoints',
-          data: MatchList_summonerPoints
-        }]
-    });
+    drawChart();
 }

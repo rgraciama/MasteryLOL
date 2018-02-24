@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -38,10 +38,10 @@
             <input type="radio" name="order" value="championPointsUntilNextLevel" id="option3" autocomplete="off">Nearest Level
           </label>
         </div>
-        <form class="form-inline my-2 my-lg-0">
+        <div class="form-inline my-2 my-lg-0">
           <input id="userName" class="form-control mr-sm-2" type="search" placeholder="SummonerName" aria-label="Search">
           <button class="btn btn-dark my-2 my-sm-0" type="submit" onclick="main();">Go!</button>
-        </form>
+        <div>
       </div>
     </nav>
 
@@ -75,27 +75,34 @@
         <img class="card-img-top" src="img/levels/m7.png" alt="Card image cap">
         <h5 id="level7" class="card-title">0</h5>
       </div>
+      <div class=col>
+        <img class="card-img-top" src="img/levels/m7.png" alt="Card image cap">
+        <h5 id="level7" class="card-title">0</h5>
+      </div>
     </div>
 
+    <!-- Chart -->
     <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
-    <!-- <div class="ct-chart ct-perfect-fourth"></div> -->
 
     <!-- Optional JavaScript -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!--
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Charist -->
-    <script src="https://gionkunz.github.io/chartist-js/scripts/all.js"></script>
+    <!-- <script src="https://gionkunz.github.io/chartist-js/scripts/all.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <!-- JSPage -->
   	<script src="js/index.js"></script>
     <!-- JsonChampion & queriesApiLol -->
     <script src="js/utilitiesLol/championJson.js"></script>
     <script src="js/utilitiesLol/queriesApiLol.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <!-- Json2html -->
     <script src="js/tools/json2html.js"></script>
     <script src="js/tools/jquery.json2html.js"></script>
