@@ -84,7 +84,8 @@ function getChartInfo(sumId) {
     //order
     var order = $("input:radio[name='order']:checked").val();
     //sort JSON
-    jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
+    var isAsc = (order==="championPointsUntilNextLevel")?'asc':'desc';
+    jsonSortByChampionID = sortJSON(JSONmasterySumId, order, isAsc);
     //Every Champion to be setted to the cahr
     for (var i = 0; i < JSONmasterySumId.length; i++) {
       championId = jsonSortByChampionID[i].championId;
@@ -112,8 +113,13 @@ function sortJSON(data, key, orden) {
         var x = a[key],
             y = b[key];
 
+        //Improvisación de como ordenar si el nearest level es = 0. Osea level7
         if (orden === 'asc') {
-            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+            if(x===0) {
+              return 1;
+            } else {
+              return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+            }
         }
 
         if (orden === 'desc') {
