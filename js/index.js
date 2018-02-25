@@ -4,6 +4,7 @@ if (typeof(MatchList_summonerPoints) == "undefined") {
   var MatchList_summonerName = [];
   var MatchList_summonerPoints = [];
   var MatchList_summonerChamp = [];
+  var MatchList_summonerChampImages = [];
   var MatchList_summonerAveragePoints = [];
   var CurrChampionLevels = [0,0,0,0,0,0,0,0];
   var namesChampionsLevel = [[],[],[],[],[],[],[]];
@@ -34,10 +35,10 @@ var myChart = new Chartist.Bar('#chart1', dataChart, {
   },
   axisX: {
     type: Chartist.FixedScaleAxis,
-    divisor: 4,
-    ticks: [1800, 6000, 12600, 21600]
+    divisor: 5,
+    ticks: [0, 1800, 6000, 12600, 21600]
   },
-  height: '3000px'
+  height: '3500px'
 });
 
 function main() {
@@ -48,6 +49,7 @@ function main() {
         var sumId = getSummonerIdByName(summoner_name);
         getChartInfo(sumId);
         drawChart();
+        drawImagesOnChart();
         drawLevels();
         drawTooltips();
     } else {
@@ -76,7 +78,14 @@ function drawLevels() {
     alert("Levels info is not working properly!");
   }
 }
-
+function drawImagesOnChart() {
+  var series = $('foreignObject > span');
+  var i = MatchList_summonerChampImages.length-1;
+  series.each(function() {
+    $( this ).html(MatchList_summonerChampImages[i]);
+    i--;
+  });
+}
 function drawChart() {
       myChart.update({
           // A labels array that can contain any sort of values
@@ -87,21 +96,29 @@ function drawChart() {
             data: MatchList_summonerPoints
           }]
       });
+
 }
 
 function drawTooltips() {
   if (typeof(namesChampionsLevel) != "undefined") {
     //jQuery
-    jQuery("#level1").attr('data-original-title', namesChampionsLevel[0]);
-    jQuery("#level2").attr('data-original-title', namesChampionsLevel[1]);
-    jQuery("#level3").attr('data-original-title', namesChampionsLevel[2])
-    jQuery("#level4").attr('data-original-title', namesChampionsLevel[3]);
-    jQuery("#level5").attr('data-original-title', namesChampionsLevel[4]);
-    jQuery("#level6").attr('data-original-title', namesChampionsLevel[5]);
-    jQuery("#level7").attr('data-original-title', namesChampionsLevel[6]);
+    jQuery("#level1").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[0]));
+    jQuery("#level2").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[1]));
+    jQuery("#level3").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[2]));
+    jQuery("#level4").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[3]));
+    jQuery("#level5").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[4]));
+    jQuery("#level6").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[5]));
+    jQuery("#level7").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[6]));
   } else {
     alert("Champion levels tooltips are not working properly!");
   }
+}
+function getImagesHtmlWithLevelChamps(stringNames) {
+    var stringImages = "";
+    stringNames.forEach(function(champ) {
+        stringImages += "<img src='https://ddragon.leagueoflegends.com/cdn/8.4.1/img/champion/"+champ+".png' style='height:30px; width:30px' title="+champ+">";
+    });
+    return stringImages;
 }
 
 function getChartInfo(sumId) {
@@ -113,10 +130,23 @@ function getChartInfo(sumId) {
     //si el orden es de nearest level orden ascendente
     var isAsc = (order==="championPointsUntilNextLevel")?'asc':'desc';
     jsonSortByChampionID = sortJSON(JSONmasterySumId, order, isAsc);
+
+    //Images Series Chart BOTTOM at reverse
+    MatchList_summonerChampImages.push("<img src='img/levels/m7.png' style='height:30px; width:30px' title='Level 7'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m6.png' style='height:30px; width:30px' title='Level 6'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m5.png' style='height:30px; width:30px' title='Level 5 [21600]'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m4.png' style='height:30px; width:30px' title='Level 4 [12600]'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m3.png' style='height:30px; width:30px' title='level 3 [6000]'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m2.png' style='height:30px; width:30px' title='Level 2 [1800]'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m1.png' style='height:30px; width:30px' title='Level 1 [0]'>");
+
     //Every Champion to be setted to the cahr
     for (var i = 0; i < JSONmasterySumId.length; i++) {
       championId = jsonSortByChampionID[i].championId;
+      //Champion Names
       MatchList_summonerChamp.push(JSONchampion.keys[this.championId]);
+      //Images Series Chart
+      MatchList_summonerChampImages.push("<img src='https://ddragon.leagueoflegends.com/cdn/8.4.1/img/champion/"+JSONchampion.keys[this.championId]+".png' style='height:25px; width:25px' title="+JSONchampion.keys[this.championId]+">");
       MatchList_summonerPoints.push(jsonSortByChampionID[i].championPoints);
       //levels of championJson
       CurrChampionLevels[jsonSortByChampionID[i].championLevel-1]+=1;
