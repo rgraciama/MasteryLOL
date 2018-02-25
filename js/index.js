@@ -6,13 +6,16 @@ if (typeof(MatchList_summonerPoints) == "undefined") {
   var MatchList_summonerChamp = [];
   var MatchList_summonerAveragePoints = [];
   var CurrChampionLevels = [0,0,0,0,0,0,0,0];
+  var namesChampionsLevel = [[],[],[],[],[],[],[]];
   var totalChampionPoints = 0;
   var nearDatePlayed = 0;
   var extraLevel = 0;
   var championId = 0;
 }
-
-
+//para poder pintar los tooltip's
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 var dataChart = {
   // A labels array that can contain any sort of values
   labels: MatchList_summonerChamp,
@@ -46,6 +49,7 @@ function main() {
         getChartInfo(sumId);
         drawChart();
         drawLevels();
+        drawTooltips();
     } else {
         alert("Insert Summoner name");
     }
@@ -78,6 +82,21 @@ function drawChart() {
       });
 }
 
+function drawTooltips() {
+  if (typeof(namesChampionsLevel) != "undefined") {
+    //jQuery
+    jQuery("#level1").attr('data-original-title', namesChampionsLevel[0]);
+    jQuery("#level2").attr('data-original-title', namesChampionsLevel[1]);
+    jQuery("#level3").attr('data-original-title', namesChampionsLevel[2])
+    jQuery("#level4").attr('data-original-title', namesChampionsLevel[3]);
+    jQuery("#level5").attr('data-original-title', namesChampionsLevel[4]);
+    jQuery("#level6").attr('data-original-title', namesChampionsLevel[5]);
+    jQuery("#level7").attr('data-original-title', namesChampionsLevel[6]);
+  } else {
+    alert("Champion levels tooltips are not working properly!");
+  }
+}
+
 function getChartInfo(sumId) {
     //get Mastery points from summoner
     var JSONmasterySumId = getChampionMasteryById(sumId);
@@ -95,6 +114,8 @@ function getChartInfo(sumId) {
       //levels of championJson
       CurrChampionLevels[jsonSortByChampionID[i].championLevel-1]+=1;
       CurrChampionLevels[7]+=jsonSortByChampionID[i].championLevel;
+      //draw tooltip
+      namesChampionsLevel[jsonSortByChampionID[i].championLevel-1].push(JSONchampion.keys[this.championId]);
     }
 
 }
@@ -119,8 +140,7 @@ function sortJSON(data, key, orden) {
             if(x===0) {
               return 1;
             } else {
-              return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-            }
+              return ((x < y) ? -1 : ((x > y) ? 1 : 0));            }
         }
 
         if (orden === 'desc') {
@@ -139,6 +159,7 @@ function resetValues() {
     MatchList_summonerName = [];
     MatchList_summonerPoints = [];
     MatchList_JSONmatchSumParticipant = [];
+    namesChampionsLevel = [[],[],[],[],[],[],[]];
 
     drawChart();
 }
