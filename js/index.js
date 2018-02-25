@@ -57,14 +57,21 @@ function main() {
 function drawLevels() {
   if (typeof(CurrChampionLevels) != "undefined") {
     //jQuery
-    jQuery("#level1 > h5").html(CurrChampionLevels[0]);
-    jQuery("#level2 > h5").html(CurrChampionLevels[1]);
-    jQuery("#level3 > h5").html(CurrChampionLevels[2]);
-    jQuery("#level4 > h5").html(CurrChampionLevels[3]);
-    jQuery("#level5 > h5").html(CurrChampionLevels[4]);
-    jQuery("#level6 > h5").html(CurrChampionLevels[5]);
-    jQuery("#level7 > h5").html(CurrChampionLevels[6]);
-    jQuery("#totalLevel > h5").html(CurrChampionLevels[7]);
+    jQuery("#level1 > h5").html(CurrChampionLevels[0]+" ("+Math.round(CurrChampionLevels[0]/totalChampions*100)+"%)");
+    jQuery("#level2 > h5").html(CurrChampionLevels[1]+" ("+Math.round(CurrChampionLevels[1]/totalChampions*100)+"%)");
+    jQuery("#level3 > h5").html(CurrChampionLevels[2]+" ("+Math.round(CurrChampionLevels[2]/totalChampions*100)+")%");
+    jQuery("#level4 > h5").html(CurrChampionLevels[3]+" ("+Math.round(CurrChampionLevels[3]/totalChampions*100)+"%)");
+    jQuery("#level5 > h5").html(CurrChampionLevels[4]+" ("+Math.round(CurrChampionLevels[4]/totalChampions*100)+"%)");
+    jQuery("#level6 > h5").html(CurrChampionLevels[5]+" ("+Math.round(CurrChampionLevels[5]/totalChampions*100)+"%)");
+    jQuery("#level7 > h5").html(CurrChampionLevels[6]+" ("+Math.round(CurrChampionLevels[6]/totalChampions*100)+"%)");
+    jQuery("#totalLevel > h5").html("LEVEL "+CurrChampionLevels[7]);
+    var totalChampsPlayed = CurrChampionLevels[0]+CurrChampionLevels[1]+
+                            CurrChampionLevels[2]+CurrChampionLevels[3]+
+                            CurrChampionLevels[4]+CurrChampionLevels[5]+
+                            CurrChampionLevels[6];
+
+    jQuery("#totalLevel > h6").html(totalChampsPlayed+"/"+totalChampions+
+                              " ("+Math.round(totalChampsPlayed/totalChampions*100)+"%)");
   } else {
     alert("Levels info is not working properly!");
   }

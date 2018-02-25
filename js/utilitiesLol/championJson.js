@@ -148,3 +148,5 @@ var JSONchampion = {
 		 "516": "Ornn"
 	 }
  };
+
+var totalChampions = Object.keys(JSONchampion.keys).length;
