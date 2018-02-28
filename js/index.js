@@ -1,18 +1,17 @@
 //VARS FROM WEBPAGE solo si no existen
-if (typeof(MatchList_summonerPoints) == "undefined") {
-  var MatchList_JSONmatchSumParticipant = [];
-  var MatchList_summonerName = [];
-  var MatchList_summonerPoints = [];
-  var MatchList_summonerChamp = [];
-  var MatchList_summonerChampImages = [];
-  var MatchList_summonerAveragePoints = [];
-  var CurrChampionLevels = [0,0,0,0,0,0,0,0];
-  var namesChampionsLevel = [[],[],[],[],[],[],[]];
-  var totalChampionPoints = 0;
-  var nearDatePlayed = 0;
-  var extraLevel = 0;
-  var championId = 0;
-}
+var MatchList_JSONmatchSumParticipant = MatchList_JSONmatchSumParticipant || [];
+var MatchList_summonerName = MatchList_summonerName || [];
+var MatchList_summonerPoints = MatchList_summonerPoints || [];
+var MatchList_summonerChamp = MatchList_summonerChamp || [];
+var MatchList_summonerChampImages = MatchList_summonerChampImages || [];
+var MatchList_summonerAveragePoints = MatchList_summonerAveragePoints || [];
+var CurrChampionLevels = CurrChampionLevels || [0,0,0,0,0,0,0,0];
+var namesChampionsLevel = namesChampionsLevel || [[],[],[],[],[],[],[]];
+var totalChampionPoints = totalChampionPoints || 0;
+var nearDatePlayed = nearDatePlayed || 0;
+var extraLevel = extraLevel || 0;
+var championId = championId || 0;
+
 //para poder pintar los tooltip's
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
