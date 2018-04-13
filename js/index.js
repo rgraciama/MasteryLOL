@@ -11,6 +11,7 @@ var totalChampionPoints = totalChampionPoints || 0;
 var nearDatePlayed = nearDatePlayed || 0;
 var extraLevel = extraLevel || 0;
 var championId = championId || 0;
+var urlDragonChampions = urlDragonChampions || "https://ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/";
 
 //para poder pintar los tooltip's
 $(function () {
@@ -115,7 +116,7 @@ function drawTooltips() {
 function getImagesHtmlWithLevelChamps(stringNames) {
     var stringImages = "";
     stringNames.forEach(function(champ) {
-        stringImages += "<img src='https://ddragon.leagueoflegends.com/cdn/8.4.1/img/champion/"+champ+".png' style='height:30px; width:30px' title="+champ+">";
+        stringImages += "<img src='"+urlDragonChampions+champ+".png' style='height:30px; width:30px' title="+champ+">";
     });
     return stringImages;
 }
@@ -145,7 +146,7 @@ function getChartInfo(sumId) {
       //Champion Names
       MatchList_summonerChamp.push(JSONchampion.keys[this.championId]);
       //Images Series Chart
-      MatchList_summonerChampImages.push("<img src='https://ddragon.leagueoflegends.com/cdn/8.4.1/img/champion/"+JSONchampion.keys[this.championId]+".png' style='height:25px; width:25px' title="+JSONchampion.keys[this.championId]+">");
+      MatchList_summonerChampImages.push("<img src='"+urlDragonChampions+JSONchampion.keys[this.championId]+".png' style='height:25px; width:25px' title="+JSONchampion.keys[this.championId]+">");
       MatchList_summonerPoints.push(jsonSortByChampionID[i].championPoints);
       //levels of championJson
       CurrChampionLevels[jsonSortByChampionID[i].championLevel-1]+=1;
