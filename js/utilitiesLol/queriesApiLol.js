@@ -3,7 +3,7 @@ var JSONmatchSumId;
 
 //Welcome to the new branch
 var sumName = "";
-var API_KEY = "RGAPI-c636c8fc-194b-4aa4-b9a5-eb53d7590558"
+var API_KEY = "RGAPI-1aa109f2-876e-4a70-94da-320e650457e8"
 var res;
 /* get request to obtain summoner name by id */
 function getSummonerIdByName(name) {
