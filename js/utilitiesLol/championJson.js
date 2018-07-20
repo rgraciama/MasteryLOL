@@ -5,6 +5,7 @@ var JSONchampionMasteryLevel ={
 	"5":21600
 }
 
+//https://developer.riotgames.com/api-methods/#lol-static-data-v3/GET_getChampionList
 //https://euw1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&champListData=keys&dataById=false
 var JSONchampion = {
     "keys": {
@@ -147,7 +148,8 @@ var JSONchampion = {
         "432": "Bard",
         "497": "Rakan",
         "498": "Xayah",
-        "516": "Ornn"
+        "516": "Ornn",
+				"555": "Pyke"
     }
  };
 
