@@ -1,242 +1,161 @@
-//VARS FROM WEBPAGE
-var totalChampionPoints = 0;
-var nearDatePlayed = 0;
-var championLevels = 0;
-var extraLevel = 0;
-var championId = 0;
+//VARS FROM WEBPAGE solo si no existen
+var MatchList_JSONmatchSumParticipant = MatchList_JSONmatchSumParticipant || [];
+var MatchList_summonerName = MatchList_summonerName || [];
+var MatchList_summonerPoints = MatchList_summonerPoints || [];
+var MatchList_summonerChamp = MatchList_summonerChamp || [];
+var MatchList_summonerChampImages = MatchList_summonerChampImages || [];
+var MatchList_summonerAveragePoints = MatchList_summonerAveragePoints || [];
+var CurrChampionLevels = CurrChampionLevels || [0,0,0,0,0,0,0,0];
+var namesChampionsLevel = namesChampionsLevel || [[],[],[],[],[],[],[]];
+var totalChampionPoints = totalChampionPoints || 0;
+var nearDatePlayed = nearDatePlayed || 0;
+var extraLevel = extraLevel || 0;
+var championId = championId || 0;
+//https://euw.leagueoflegends.com/es/game-info/champions/
+var urlDragonChampions = urlDragonChampions || "https://ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/";
 
-function resetValues() {
-    $('ul#chart').empty();
-    for (var i = 0; i < 9; i++) {
-        $('ul#p' + i + '_chart').empty();
-    }
-    nearDatePlayed = 0;
-    totalChampionPoints = 0;
-    championLevels = 0;
-    extraLevel = 0;
-
-    MatchList_summonerChamp = [];
-    MatchList_summonerName = [];
-    MatchList_summonerPoints = [];
-    MatchList_JSONmatchSumParticipant = [];
-
-    myChart.update({
-        // A labels array that can contain any sort of values
-        labels: MatchList_summonerChamp,
-        // Our series array that contains series objects or in this case series data arrays
-        series: [{
-          name: 'ChamPoints',
-          data:MatchList_summonerPoints
-        }]
-    });
-}
-
-//ORDENAR JSON
-function sortJSON(data, key, orden) {
-    return data.sort(function(a, b) {
-        var x = a[key],
-            y = b[key];
-
-        if (orden === 'asc') {
-            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-        }
-
-        if (orden === 'desc') {
-            return ((x > y) ? -1 : ((x < y) ? 1 : 0));
-        }
-    });
-}
-
-var transformsJSONsumChamMastery = {
-
-    //Single bar in the bar chart
-    "bar": [{
-        "<>": "li",
-        "class": "group",
-        "title": function() {
-            var d = new Date();
-            var curr = d.getTime();
-            //parse miliseconds to days
-            var daysBetweenDates = Math.round((curr - this.lastPlayTime) / 1000 / 60 / 60 / 24);
-            return (this.championPoints + " [" + daysBetweenDates + " days]");
-        },
-        "html": [{
-                "<>": "div",
-                "class": function() {
-                    if ((championId === this.championId) && this.chestGranted) {
-                        //TODO agregas championPoints al array
-                        MatchList_summonerPoints.push(this.championPoints);
-
-                        return "bar currentChest";
-                    } else if (this.chestGranted) {
-                        return "bar chest";
-                    } else if (championId === this.championId) {
-                        //TODO agregas championPoints al array
-                        MatchList_summonerPoints.push(this.championPoints);
-
-                        return "bar current"
-                    } else {
-                        return "bar";
-                    }
-                },
-                "style": function() {
-                    //Calculate the scale that we want this in
-                    if (nearDatePlayed < this.lastPlayTime) {
-                        nearDatePlayed = this.lastPlayTime;
-                    }
-                    totalChampionPoints += this.championPoints;
-                    championLevels += this.championLevel;
-                    extraLevel += ((this.championLevel > 5) ? this.championLevel - 5 : 0);
-                    return ('height:' + this.championPoints / 250 + 'px;');
-                },
-                "html": "${championLevel}"
-            },
-            {
-                "<>": "div",
-                "class": "label",
-                "html": function() {
-                    return (JSONchampion.keys[this.championId])
-                }
-            }
-        ]
-    }]
+//para poder pintar los tooltip's
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+var dataChart = {
+  // A labels array that can contain any sort of values
+  labels: MatchList_summonerChamp,
+  // Our series array that contains series objects or in this case series data arrays
+  series: [{
+    name: 'ChamPoints',
+    data: MatchList_summonerPoints
+  }]
 };
-
-function printBars(data, cssLocation) {
-    $(cssLocation).json2html(JSON.stringify(data), transformsJSONsumChamMastery.bar);
-    //console.log(JSON.stringify(data));
-}
-
-function getTab1Info(sumId) {
-    //print bars from mastery points
-    resetValues();
-
-    //order
-    var order = $("input:radio[name='order']:checked").val();
-
-    //get Mastery points from summoner
-    var JSONmasterySumId = getChampionMasteryById(sumId);
-
-    //sort JSON
-    jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
-
-    printBars(jsonSortByChampionID, "#chart");
-    $('#summonerName').html("Name: " + $("#userName").val().replace(" ", "").toLowerCase().trim());
-    $('#totalPoints').html("Total: " + totalChampionPoints);
-    $('#totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
-    $('#totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
-    $("#top").toggle("slow");
-    $("#tabs").show("slow");
-}
-
-function getTab2Info(sumId) {
-    JSONmatchSumId = getCurrentMatchBySummonerId(sumId);
-
-    //order
-    var order = $("input:radio[name='order']:checked").val();
-
-    //$("#prueba2").html(JSON.stringify(JSONmatchSumId));
-
-    for (var i = 0; i < 10; i++) {
-      //resetValues per every champ
-      nearDatePlayed = 0;
-      totalChampionPoints = 0;
-      championLevels = 0;
-      extraLevel = 0;
-
-        sleep(1100);
-
-        var currSumId = JSONmatchSumId.participants[i].summonerId;
-
-        //get Mastery points from summoner
-        var JSONmasterySumId = getChampionMasteryById(currSumId);
-
-        //sort JSON
-        jsonSortByChampionID = sortJSON(JSONmasterySumId, order, 'desc');
-
-        championId = JSONmatchSumId.participants[i].championId;
-
-        //Control summonerMatch
-        MatchList_JSONmatchSumParticipant.push(JSONmasterySumId);
-        MatchList_summonerName.push(JSONmatchSumId.participants[i].summonerName);
-        MatchList_summonerChamp.push(JSONchampion.keys[this.championId]);
-
-        //printbars
-        printBars(jsonSortByChampionID, "#p" + i + "_chart");
-
-        //Comprobar length de array para ver si se ha añadido champPoints
-        if (MatchList_summonerChamp.length !== MatchList_summonerPoints.length) {
-          MatchList_summonerPoints.push(0);
-        }
-        if (JSONmatchSumId.participants[i].summonerName == $("#userName").val()) {
-            if (i < 5) {
-                $("#tab-2_title").html("Team1 *");
-                $("#tab-3_title").html("Team2");
-            } else {
-                $("#tab-2_title").html("Team1");
-                $("#tab-3_title").html("Team2 *");
-            }
-        }
-        $('#p' + i + '_summonerName').html("Name: " + JSONmatchSumId.participants[i].summonerName);
-        $('#p' + i + '_totalPoints').html("Total: " + totalChampionPoints);
-        $('#p' + i + '_totalChampionLevel').html("Level: " + championLevels + " [" + extraLevel + "]");
-        $('#p' + i + '_totalTimePlayed').html("Time: " + new Date(nearDatePlayed).toString());
-
-
-    }
-}
-
-function getTab4Info() {
-
-    myChart.update({
-        // A labels array that can contain any sort of values
-        labels: MatchList_summonerChamp,
-        // Our series array that contains series objects or in this case series data arrays
-        series: [{
-          name: 'ChamPoints',
-          data:MatchList_summonerPoints
-        }]
-    });
-
-    var $tooltip = $('<div class="tooltip tooltip-hidden"></div>').appendTo($('.ct-chart'));
-
-    $(document).on('mouseenter', '.ct-point', function() {
-      var seriesName = $(this).closest('.ct-series').attr('ct:series-name'),
-          value = $(this).attr('ct:value');
-
-      $tooltip.text(seriesName + ': ' + value);
-      $tooltip.removeClass('tooltip-hidden');
-    });
-
-    $(document).on('mouseleave', '.ct-point', function() {
-      $tooltip.addClass('tooltip-hidden');
-    });
-
-    $(document).on('mousemove', '.ct-point', function(event) {
-      //console.log(event);
-      $tooltip.css({
-        left: (event.offsetX || event.originalEvent.layerX) - $tooltip.width() / 2,
-        top: (event.offsetY || event.originalEvent.layerY) - $tooltip.height() - 20
-      });
-    });
-
-}
+var myChart = new Chartist.Bar('#chart1', dataChart, {
+  seriesBarDistance: 10,
+  reverseData: true,
+  horizontalBars: true,
+  axisY: {
+    offset: 100,
+  },
+  axisX: {
+    type: Chartist.FixedScaleAxis,
+    divisor: 5,
+    ticks: [0, 1800, 6000, 12600, 21600]
+  },
+  height: '3500px'
+});
 
 function main() {
+    resetValues();
     var summoner_name = $("#userName").val().replace(" ", "").toLowerCase().trim();
-    API_KEY = $("#apiKey").val();
     if (summoner_name !== "") {
-
         //get ID summoner
         var sumId = getSummonerIdByName(summoner_name);
-
-        getTab1Info(sumId);
-        getTab2Info(sumId);
-        getTab4Info();
-
+        getChartInfo(sumId);
+        drawChart();
+        drawImagesOnChart();
+        drawLevels();
+        drawTooltips();
     } else {
         alert("Insert Summoner name");
     }
+}
+function drawLevels() {
+  if (typeof(CurrChampionLevels) != "undefined") {
+    //jQuery
+    jQuery("#level1 > h5").html(CurrChampionLevels[0]+" ("+Math.round(CurrChampionLevels[0]/totalChampions*100)+"%)");
+    jQuery("#level2 > h5").html(CurrChampionLevels[1]+" ("+Math.round(CurrChampionLevels[1]/totalChampions*100)+"%)");
+    jQuery("#level3 > h5").html(CurrChampionLevels[2]+" ("+Math.round(CurrChampionLevels[2]/totalChampions*100)+")%");
+    jQuery("#level4 > h5").html(CurrChampionLevels[3]+" ("+Math.round(CurrChampionLevels[3]/totalChampions*100)+"%)");
+    jQuery("#level5 > h5").html(CurrChampionLevels[4]+" ("+Math.round(CurrChampionLevels[4]/totalChampions*100)+"%)");
+    jQuery("#level6 > h5").html(CurrChampionLevels[5]+" ("+Math.round(CurrChampionLevels[5]/totalChampions*100)+"%)");
+    jQuery("#level7 > h5").html(CurrChampionLevels[6]+" ("+Math.round(CurrChampionLevels[6]/totalChampions*100)+"%)");
+    jQuery("#totalLevel > h5").html("LEVEL "+CurrChampionLevels[7]);
+    var totalChampsPlayed = CurrChampionLevels[0]+CurrChampionLevels[1]+
+                            CurrChampionLevels[2]+CurrChampionLevels[3]+
+                            CurrChampionLevels[4]+CurrChampionLevels[5]+
+                            CurrChampionLevels[6];
+
+    jQuery("#totalLevel > h6").html(totalChampsPlayed+"/"+totalChampions+
+                              " ("+Math.round(totalChampsPlayed/totalChampions*100)+"%)");
+  } else {
+    alert("Levels info is not working properly!");
+  }
+}
+function drawImagesOnChart() {
+  var series = $('foreignObject > span');
+  var i = MatchList_summonerChampImages.length-1;
+  series.each(function() {
+    $( this ).html(MatchList_summonerChampImages[i]);
+    i--;
+  });
+}
+function drawChart() {
+      myChart.update({
+          // A labels array that can contain any sort of values
+          labels: MatchList_summonerChamp,
+          // Our series array that contains series objects or in this case series data arrays
+          series: [{
+            name: 'ChamPoints',
+            data: MatchList_summonerPoints
+          }]
+      });
+
+}
+
+function drawTooltips() {
+  if (typeof(namesChampionsLevel) != "undefined") {
+    //jQuery
+    jQuery("#level1").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[0]));
+    jQuery("#level2").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[1]));
+    jQuery("#level3").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[2]));
+    jQuery("#level4").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[3]));
+    jQuery("#level5").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[4]));
+    jQuery("#level6").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[5]));
+    jQuery("#level7").attr('data-original-title', getImagesHtmlWithLevelChamps(namesChampionsLevel[6]));
+  } else {
+    alert("Champion levels tooltips are not working properly!");
+  }
+}
+function getImagesHtmlWithLevelChamps(stringNames) {
+    var stringImages = "";
+    stringNames.forEach(function(champ) {
+        stringImages += "<img src='"+urlDragonChampions+champ+".png' style='height:30px; width:30px' title="+champ+">";
+    });
+    return stringImages;
+}
+
+function getChartInfo(sumId) {
+    //get Mastery points from summoner
+    var JSONmasterySumId = getChampionMasteryById(sumId);
+    //order
+    var order = $("input:radio[name='order']:checked").val();
+    //sort JSON
+    //si el orden es de nearest level orden ascendente
+    var isAsc = (order==="championPointsUntilNextLevel")?'asc':'desc';
+    jsonSortByChampionID = sortJSON(JSONmasterySumId, order, isAsc);
+
+    //Images Series Chart BOTTOM at reverse
+    MatchList_summonerChampImages.push("<img src='img/levels/m7.png' style='height:30px; width:30px' title='Level 7'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m6.png' style='height:30px; width:30px' title='Level 6'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m5.png' style='height:30px; width:30px' title='Level 5 [21600]'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m4.png' style='height:30px; width:30px' title='Level 4 [12600]'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m3.png' style='height:30px; width:30px' title='level 3 [6000]'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m2.png' style='height:30px; width:30px' title='Level 2 [1800]'>");
+    MatchList_summonerChampImages.push("<img src='img/levels/m1.png' style='height:30px; width:30px' title='Level 1 [0]'>");
+
+    //Every Champion to be setted to the cahr
+    for (var i = 0; i < JSONmasterySumId.length; i++) {
+      championId = jsonSortByChampionID[i].championId;
+      //Champion Names
+      MatchList_summonerChamp.push(JSONchampion.keys[this.championId]);
+      //Images Series Chart
+      MatchList_summonerChampImages.push("<img src='"+urlDragonChampions+JSONchampion.keys[this.championId]+".png' style='height:25px; width:25px' title="+JSONchampion.keys[this.championId]+">");
+      MatchList_summonerPoints.push(jsonSortByChampionID[i].championPoints);
+      //levels of championJson
+      CurrChampionLevels[jsonSortByChampionID[i].championLevel-1]+=1;
+      CurrChampionLevels[7]+=jsonSortByChampionID[i].championLevel;
+      //draw tooltip
+      namesChampionsLevel[jsonSortByChampionID[i].championLevel-1].push(JSONchampion.keys[this.championId]);
+    }
+
 }
 
 function sleep(milliseconds) {
@@ -246,4 +165,39 @@ function sleep(milliseconds) {
             break;
         }
     }
+}
+
+//ORDENAR JSON
+function sortJSON(data, key, orden) {
+    return data.sort(function(a, b) {
+        var x = a[key],
+            y = b[key];
+
+        //Improvisación de como ordenar si el nearest level es = 0. Osea level7
+        if (orden === 'asc') {
+            if(x===0) {
+              return 1;
+            } else {
+              return ((x < y) ? -1 : ((x > y) ? 1 : 0));            }
+        }
+
+        if (orden === 'desc') {
+            return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+        }
+    });
+}
+
+function resetValues() {
+    nearDatePlayed = 0;
+    totalChampionPoints = 0;
+    CurrChampionLevels = [0,0,0,0,0,0,0,0];
+    extraLevel = 0;
+
+    MatchList_summonerChamp = [];
+    MatchList_summonerName = [];
+    MatchList_summonerPoints = [];
+    MatchList_JSONmatchSumParticipant = [];
+    namesChampionsLevel = [[],[],[],[],[],[],[]];
+
+    drawChart();
 }
