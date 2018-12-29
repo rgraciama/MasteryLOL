@@ -12,7 +12,7 @@ var nearDatePlayed = nearDatePlayed || 0;
 var extraLevel = extraLevel || 0;
 var championId = championId || 0;
 //https://euw.leagueoflegends.com/es/game-info/champions/
-var urlDragonChampions = urlDragonChampions || "https://ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/";
+var urlDragonChampions = urlDragonChampions || "https://ddragon.leagueoflegends.com/cdn/8.24.1/img/champion/";
 
 //para poder pintar los tooltip's
 $(function () {

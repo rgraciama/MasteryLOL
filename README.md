@@ -4,7 +4,7 @@
 
 A simple page to obtain Mastery Champion points, given a summoner name account.
 
-![](img/readme/2018-12-29-14-06-51.png)
+![](img/readme/2018-12-29-14-31-41.png)
 
 You need to add summoner name and press "Go" button.
 

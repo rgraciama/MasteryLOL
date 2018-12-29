@@ -149,6 +149,7 @@ var JSONchampion = {
         "497": "Rakan",
         "498": "Xayah",
         "516": "Ornn",
+        "518": "Neeko",
 				"555": "Pyke"
     }
  };
